@@ -138,14 +138,14 @@ export default function CreatePage() {
               </div>
 
               <div className="mt-6 grid gap-4">
-                <input className={fieldClass} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Post title" required />
+                <label className="grid gap-2 text-xs font-black uppercase tracking-[.16em] opacity-65">Campaign headline<input className={fieldClass} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Press release or campaign headline" required /></label>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <input className={fieldClass} value={category} onChange={(event) => setCategory(event.target.value)} placeholder="Category" />
-                  <input className={fieldClass} value={url} onChange={(event) => setUrl(event.target.value)} placeholder="Website or source URL" />
+                  <label className="grid gap-2 text-xs font-black uppercase tracking-[.16em] opacity-65">Industry category<input className={fieldClass} value={category} onChange={(event) => setCategory(event.target.value)} placeholder="Technology, finance, healthcare..." /></label>
+                  <label className="grid gap-2 text-xs font-black uppercase tracking-[.16em] opacity-65">Source URL<input className={fieldClass} value={url} onChange={(event) => setUrl(event.target.value)} placeholder="Website or source URL" /></label>
                 </div>
-                <input className={fieldClass} value={image} onChange={(event) => setImage(event.target.value)} placeholder="Featured image URL" />
-                <textarea className={`${fieldClass} min-h-24`} value={summary} onChange={(event) => setSummary(event.target.value)} placeholder="Short summary" required />
-                <textarea className={`${fieldClass} min-h-48`} value={body} onChange={(event) => setBody(event.target.value)} placeholder="Main content, details, notes, or description" required />
+                <label className="grid gap-2 text-xs font-black uppercase tracking-[.16em] opacity-65">Campaign thumbnail<input className={fieldClass} value={image} onChange={(event) => setImage(event.target.value)} placeholder="Featured image URL" /></label>
+                <label className="grid gap-2 text-xs font-black uppercase tracking-[.16em] opacity-65">Release summary<textarea className={`${fieldClass} min-h-24`} value={summary} onChange={(event) => setSummary(event.target.value)} placeholder="A concise media-ready summary for publishers and journalists" required /></label>
+                <label className="grid gap-2 text-xs font-black uppercase tracking-[.16em] opacity-65">Press release content<textarea className={`${fieldClass} min-h-48`} value={body} onChange={(event) => setBody(event.target.value)} placeholder="Full announcement, proof points, brand context, media notes, and call to action" required /></label>
               </div>
 
               {created ? (

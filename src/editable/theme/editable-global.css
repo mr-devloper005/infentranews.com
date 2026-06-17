@@ -3,6 +3,10 @@
   --editorial-red: var(--slot4-accent-fill);
   --editorial-ink: var(--slot4-page-text);
   --editorial-paper: var(--slot4-surface-bg);
+  --editable-selection-bg: #f4b63d;
+  --editable-selection-text: #101928;
+  --editable-container: 1180px;
+  --editable-wide-container: 1240px;
 }
 
 html { scroll-behavior: smooth; }
@@ -15,14 +19,14 @@ body {
 }
 
 *::selection {
-  background: var(--editorial-red) !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff;
+  background: var(--editable-selection-bg) !important;
+  color: var(--editable-selection-text) !important;
+  -webkit-text-fill-color: var(--editable-selection-text);
 }
 
 *::-moz-selection {
-  background: var(--editorial-red) !important;
-  color: #fff !important;
+  background: var(--editable-selection-bg) !important;
+  color: var(--editable-selection-text) !important;
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -80,6 +84,59 @@ body {
 .article-content img { width: 100%; margin: 2em 0; }
 
 input, textarea, select, button { border-radius: 0 !important; }
+
+.editable-reveal {
+  animation: editable-slide-up .62s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.editable-reveal-delay-1 { animation-delay: .08s; }
+.editable-reveal-delay-2 { animation-delay: .16s; }
+.editable-reveal-delay-3 { animation-delay: .24s; }
+
+.editable-hover-lift {
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background-color .28s ease;
+}
+
+.editable-hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 60px rgba(16, 25, 40, .14);
+}
+
+.editable-image-zoom img {
+  transition: transform .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.editable-image-zoom:hover img {
+  transform: scale(1.045);
+}
+
+@keyframes editable-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .editable-reveal,
+  .editable-reveal-delay-1,
+  .editable-reveal-delay-2,
+  .editable-reveal-delay-3 {
+    animation: none !important;
+  }
+  .editable-hover-lift,
+  .editable-image-zoom img {
+    transition: none !important;
+  }
+  .editable-hover-lift:hover {
+    transform: none;
+  }
+}
 
 @media (max-width: 640px) {
   .article-content { font-size: 1.05rem; line-height: 1.72; }
