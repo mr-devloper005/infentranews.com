@@ -1,23 +1,23 @@
 import type { CSSProperties } from 'react'
 
 export const editableRootStyle = {
-  '--slot4-page-bg': '#f7f4ef',
-  '--slot4-page-text': '#111111',
-  '--slot4-panel-bg': '#efeae3',
-  '--slot4-surface-bg': '#fffdfa',
-  '--slot4-muted-text': '#514e49',
-  '--slot4-soft-muted-text': '#77716a',
-  '--slot4-accent': '#c92f2f',
-  '--slot4-accent-fill': '#c92f2f',
-  '--slot4-accent-soft': '#f3d8d3',
-  '--slot4-dark-bg': '#111111',
+  '--slot4-page-bg': '#f5f7fb',
+  '--slot4-page-text': '#111827',
+  '--slot4-panel-bg': '#e7edf5',
+  '--slot4-surface-bg': '#ffffff',
+  '--slot4-muted-text': '#485467',
+  '--slot4-soft-muted-text': '#748094',
+  '--slot4-accent': '#0f6b63',
+  '--slot4-accent-fill': '#0f6b63',
+  '--slot4-accent-soft': '#d9f0ec',
+  '--slot4-dark-bg': '#101928',
   '--slot4-dark-text': '#ffffff',
-  '--slot4-media-bg': '#e4e0da',
-  '--slot4-cream': '#f7f4ef',
-  '--slot4-warm': '#fffdfa',
-  '--slot4-lavender': '#c92f2f',
-  '--slot4-gray': '#ece9e4',
-  '--slot4-body-gradient': 'linear-gradient(180deg, #f7f4ef 0%, #fffdfa 52%, #eeeae4 100%)',
+  '--slot4-media-bg': '#dde5ef',
+  '--slot4-cream': '#f5f7fb',
+  '--slot4-warm': '#ffffff',
+  '--slot4-lavender': '#f4b63d',
+  '--slot4-gray': '#e8edf4',
+  '--slot4-body-gradient': 'linear-gradient(180deg, #f5f7fb 0%, #ffffff 48%, #edf3f7 100%)',
 } as CSSProperties
 
 export const editablePalette = {
@@ -50,7 +50,7 @@ export const editablePalette = {
 export const editableDesignContract = {
   shell: {
     page: `min-h-screen ${editablePalette.pageBg} ${editablePalette.pageText}`,
-    section: 'mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10',
+    section: 'mx-auto w-full max-w-[var(--editable-wide-container)] px-4 sm:px-6 lg:px-8',
     sectionY: 'py-12 sm:py-16 lg:py-20',
   },
   layout: {
@@ -87,7 +87,7 @@ export const editableDesignContract = {
 
 export const aiLayoutRules = [
   'All visible layout decisions belong inside src/editable; keep data, SEO, API, and route logic untouched.',
-  'Use a publication-style white masthead, black category navigation, red editorial accents, and sharp image-led grids.',
+  'Use a premium media distribution platform style with controlled widths, white surfaces, dark navy foundations, teal accents, amber highlights, and sharp image-led campaign grids.',
   'Keep dynamic post fetching intact and never replace backend posts with mock arrays.',
   'Use postHref() for all post links so route aliases and task-specific detail pages remain functional.',
   'Prioritize readable desktop and mobile layouts with broad story columns and a focused long-form article measure.',
