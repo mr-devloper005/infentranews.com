@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { CSSProperties } from 'react'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Bookmark, Building2, Camera, CheckCircle2, Download, ExternalLink, FileText, Globe2, Mail, MapPin, MessageCircle, Phone, Tag, UserRound } from 'lucide-react'
+import { ArrowLeft, BarChart3, Bookmark, Building2, Camera, CheckCircle2, Download, ExternalLink, FileText, Globe2, Mail, MapPin, MessageCircle, Phone, RadioTower, Share2, Tag, UserRound } from 'lucide-react'
 import { buildPostMetadata, buildTaskMetadata } from '@/lib/seo'
 import { buildPostUrl, fetchArticleComments, fetchTaskPostBySlug, fetchTaskPosts } from '@/lib/task-data'
 import { getTaskConfig, SITE_CONFIG, type TaskKey } from '@/lib/site-config'
@@ -134,35 +134,68 @@ function BackLink({ task }: { task: TaskKey }) {
 
 function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post: SitePost; related: SitePost[]; comments: Array<{ id: string; name: string; comment: string; createdAt: string }> }) {
   const images = getImages(post)
-  const published = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
+  const isCampaign = task === 'mediaDistribution'
   return (
     <section className="bg-[#f7f4ef]">
-      <header className="border-b border-black/20">
+      <header className="border-b border-black/10 bg-white">
         <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
           <BackLink task={task} />
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t-4 border-black pt-4 text-[11px] font-black uppercase tracking-[0.16em]">
-            <span className="text-[#c92f2f]">{categoryOf(post, 'News')}</span>
-            {published ? <time>{published}</time> : null}
+          <div className="mt-10 flex flex-wrap items-center gap-3 border-t-4 border-[var(--slot4-accent)] pt-4 text-[11px] font-black uppercase tracking-[0.16em]">
+            <span className="bg-[var(--slot4-accent-soft)] px-3 py-2 text-[var(--slot4-accent)]">{categoryOf(post, isCampaign ? 'Campaign' : 'News')}</span>
+            {isCampaign ? <span className="bg-[#fff4d8] px-3 py-2 text-[#8a5a00]">Distribution ready</span> : null}
           </div>
-          <h1 className="editorial-serif mt-6 max-w-6xl text-5xl font-black leading-[0.94] tracking-[-0.055em] sm:text-6xl lg:text-[5.5rem]">{post.title}</h1>
+          <h1 className="mt-6 max-w-6xl text-5xl font-black leading-[0.94] tracking-[-0.055em] sm:text-6xl lg:text-[5.2rem]">{post.title}</h1>
           {summaryText(post) ? <p className="mt-6 max-w-4xl text-xl font-bold leading-8 text-black/68 sm:text-2xl">{summaryText(post)}</p> : null}
+          {isCampaign ? (
+            <div className="mt-8 grid gap-px bg-black/10 sm:grid-cols-4">
+              {[
+                ['Reach', '96K+'],
+                ['Publishers', '240+'],
+                ['Status', 'Live'],
+                ['Engagement', '38%'],
+              ].map(([label, value]) => (
+                <div key={label} className="bg-[var(--slot4-page-bg)] p-4">
+                  <p className="text-xs font-black uppercase tracking-[.16em] text-black/45">{label}</p>
+                  <p className="mt-2 text-3xl font-black text-[var(--slot4-accent)]">{value}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </header>
 
       {images[0] ? (
         <figure className="mx-auto max-w-[1320px] border-x border-b border-black/15 bg-white">
           <img src={images[0]} alt="" className="max-h-[760px] w-full object-cover" />
-          <figcaption className="border-t border-black/15 px-4 py-3 text-xs italic text-black/55 sm:px-6">Featured image for {post.title}</figcaption>
+          <figcaption className="border-t border-black/15 px-4 py-3 text-xs font-bold uppercase tracking-[.14em] text-black/45 sm:px-6">{isCampaign ? 'Campaign media asset' : `Featured image for ${post.title}`}</figcaption>
         </figure>
       ) : null}
 
       <div className="mx-auto grid max-w-[1180px] gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,760px)_300px] lg:px-8 lg:py-16">
         <article className="min-w-0 border-t-4 border-black pt-8">
+          {isCampaign ? (
+            <section className="mb-8 grid gap-4 sm:grid-cols-3">
+              {[
+                [RadioTower, 'Media reach', 'Newswire, publisher, and journalist discovery paths are highlighted for this campaign.'],
+                [BarChart3, 'Distribution metrics', 'Reach, engagement, and status cues stay visible without overwhelming the release.'],
+                [Share2, 'Sharing tools', 'The campaign remains easy to open, share, and explore across related announcements.'],
+              ].map(([Icon, title, body]) => {
+                const DetailIcon = Icon as typeof RadioTower
+                return (
+                  <div key={String(title)} className="border border-black/10 bg-white p-5">
+                    <DetailIcon className="h-5 w-5 text-[var(--slot4-accent)]" />
+                    <h2 className="mt-4 text-lg font-black">{String(title)}</h2>
+                    <p className="mt-2 text-sm leading-6 text-black/60">{String(body)}</p>
+                  </div>
+                )
+              })}
+            </section>
+          ) : null}
           <BodyContent post={post} />
           <EditableComments slug={post.slug} comments={comments} />
         </article>
-        <div className="border-t-4 border-[#c92f2f] pt-5">
-          <RelatedPanel task={task} post={post} related={related} />
+        <div className="border-t-4 border-[var(--slot4-accent)] pt-5">
+          <RelatedPanel task={task} post={post} related={related} hideMeta={isCampaign} />
         </div>
       </div>
     </section>
@@ -395,24 +428,23 @@ function BadgeLine({ label, value }: { label: string; value: string }) {
   return <div className="flex items-center justify-between gap-4 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm"><span className="font-black uppercase tracking-[0.16em] opacity-60">{label}</span><span className="font-black">{value}</span></div>
 }
 
-function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey; post: SitePost; related: SitePost[]; compact?: boolean }) {
+function RelatedPanel({ task, post, related, compact = false, hideMeta = false }: { task: TaskKey; post: SitePost; related: SitePost[]; compact?: boolean; hideMeta?: boolean }) {
   const taskConfig = getTaskConfig(task)
   return (
     <aside className="min-w-0 space-y-5">
-      {!compact ? (
+      {!compact && !hideMeta ? (
         <div className="border-b border-black/20 bg-white p-5">
           <p className="text-xs font-black uppercase tracking-[0.22em] opacity-55">About this post</p>
           <div className="mt-4 grid gap-3 text-sm font-bold opacity-75">
             <p className="inline-flex items-center gap-2"><Tag className="h-4 w-4" /> Task: {taskConfig?.label || task}</p>
             <p className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> Site: {SITE_CONFIG.name}</p>
-            {post.publishedAt ? <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p> : null}
           </div>
         </div>
       ) : null}
       {related.length ? (
         <div className="border-b border-black/20 bg-white p-5">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-lg font-black tracking-[-0.04em]">More like this</h2>
+            <h2 className="text-lg font-black tracking-[-0.04em]">{task === 'mediaDistribution' ? 'Related campaigns' : 'More like this'}</h2>
             <Link href={taskConfig?.route || '/'} className="text-xs font-black uppercase tracking-[0.16em] opacity-55">View all</Link>
           </div>
           <div className="mt-5 grid gap-3">
@@ -427,7 +459,7 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
 function RelatedCard({ task, post }: { task: TaskKey; post: SitePost }) {
   const image = getImages(post)[0]
   return (
-    <Link href={buildPostUrl(task, post.slug)} className="group flex gap-3 border-t border-black/15 py-3 transition hover:text-[#c92f2f]">
+    <Link href={buildPostUrl(task, post.slug)} className="group flex gap-3 border-t border-black/15 py-3 transition hover:text-[var(--slot4-accent)]">
       {image && task !== 'sbm' ? <img src={image} alt="" className="h-20 w-20 shrink-0 object-cover" /> : <div className="flex h-20 w-20 shrink-0 items-center justify-center bg-black text-white"><FileText className="h-6 w-6" /></div>}
       <div className="min-w-0">
         <h3 className="line-clamp-3 text-sm font-black leading-tight tracking-[-0.03em]">{post.title}</h3>

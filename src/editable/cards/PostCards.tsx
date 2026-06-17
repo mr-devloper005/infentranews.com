@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Clock3 } from 'lucide-react'
+import { ArrowRight, BarChart3, Clock3, RadioTower } from 'lucide-react'
 import type { SitePost } from '@/lib/site-connector'
 import type { TaskKey } from '@/lib/site-config'
 import { editableDesignContract as dc, editablePalette as pal } from '@/editable/layouts/design-contract'
@@ -64,6 +64,10 @@ export function RailPostCard({ post, href, index }: { post: SitePost; href: stri
           <span>{getEditableCategory(post)}</span><span>{String(index + 1).padStart(2, '0')}</span>
         </div>
         <h3 className="mt-3 line-clamp-3 text-xl font-black leading-[1.02] tracking-[-.04em]">{post.title}</h3>
+        <div className="mt-4 flex items-center gap-3 text-[11px] font-black uppercase tracking-[.1em] text-black/45">
+          <span className="inline-flex items-center gap-1"><RadioTower className="h-3 w-3" /> Live</span>
+          <span className="inline-flex items-center gap-1"><BarChart3 className="h-3 w-3" /> {(index + 3) * 12}K</span>
+        </div>
       </div>
     </Link>
   )
@@ -88,10 +92,10 @@ export function ArticleListCard({ post, href, index }: { post: SitePost; href: s
         <img src={getEditablePostImage(post)} alt={post.title} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />
       </div>
       <div className="min-w-0 pt-4 sm:pt-1">
-        <p className={`${dc.type.eyebrow} ${pal.accentText}`}>{String(index + 1).padStart(2, '0')} / {getEditableCategory(post)}</p>
+        <p className={`${dc.type.eyebrow} ${pal.accentText}`}>{String(index + 1).padStart(2, '0')} / {getEditableCategory(post)} / Campaign</p>
         <h2 className="mt-3 line-clamp-3 text-3xl font-black leading-[1.02] tracking-[-.05em] group-hover:text-[var(--slot4-accent)]">{post.title}</h2>
         <p className={`mt-4 line-clamp-3 text-sm leading-7 ${pal.mutedText}`}>{getEditableExcerpt(post, 190)}</p>
-        <span className="mt-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[.14em]">Read story <ArrowRight className="h-4 w-4" /></span>
+        <span className="mt-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[.14em]">Open campaign <ArrowRight className="h-4 w-4" /></span>
       </div>
     </Link>
   )
